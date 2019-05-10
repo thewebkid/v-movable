@@ -1,7 +1,7 @@
 # v-movable
 
 ## Installation
-npm install --save 'v-movable';
+npm install --save v-movable;
 
 
 ### Usage
