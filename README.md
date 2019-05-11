@@ -25,6 +25,11 @@ A vue component or component wrapper that makes an element movable and its movem
 - **vertical**: _[min, max]_ - constrain movement to x axis within min and max provided. Shorthand for bounds="{y:[0,0],x:[min,max]}" 
 - **grid**: _Int_ - defaults to 1. snap to grid size in pixels.
 
+### Events (prefer over attrib handlers above)
+- **@start**: fires immediately after the pointerdown event on the element
+- **@move**: fires continuously while moving
+- **@complete**: fires after the pointerup event on the element 
+
 ### Usage
 
     <template>

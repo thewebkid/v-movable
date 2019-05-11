@@ -5,7 +5,7 @@ const pxVal = v => Number(v.replace(/[^0-9]/g,''));
 const childOf = (pid, child) => {
   while(child.getAttribute('moveid') !== pid){
     child = child.parentElement;
-    if (child.tagName === 'BODY'){
+    if (!child || child.tagName === 'BODY'){
       return false;
     }
   }
@@ -137,6 +137,7 @@ Vue.directive('movable',{
       moveObj.maxY = actualBounds.top[0] + actualBounds.top[1];
       isMoving = true;
       args.reposition(true);
+      args.eventBroker({name:'start',args:moveObj});
       if (onstart) {
         onstart(moveObj);
       }
@@ -175,7 +176,7 @@ Vue.directive('movable',{
       if (onmove) {
         onmove(moveObj);
       }
-
+      args.eventBroker({name:'move',args:moveObj});
     };
 
     const unbind = (evt) => {
@@ -189,6 +190,7 @@ Vue.directive('movable',{
         oncomplete(moveObj);
       isMoving = moveObj.isMoving = false;
       args.reposition(false);
+      args.eventBroker({name:'complete',args:moveObj});
       if (event) {
         event.preventDefault();
       }

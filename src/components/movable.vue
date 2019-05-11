@@ -40,7 +40,11 @@
         if (vm['posLeft']){
           this.left = Number(this.posLeft);
         }
-        let moveArgs = { reposition:this.reposition, directiveInit:this.directiveInit };
+        let moveArgs = {
+          reposition:this.reposition,
+          directiveInit:this.directiveInit,
+          eventBroker:this.eventBroker
+        };
         const availArgs = ['bounds','onstart','oncomplete',
           'onmove', 'grid', 'vertical','horizontal','disabled'];
         availArgs.filter(a => vm[a] !== undefined)
@@ -49,6 +53,9 @@
           moveArgs.target = vm.$parent.$refs[this.target];
         }
         this.moveArgs = moveArgs;
+      },
+      eventBroker({name,args}){
+        this.$emit(name, args);
       },
       directiveInit(rpcFn){
         this.rpcFunc = rpcFn
