@@ -2,7 +2,7 @@
   "name": "v-movable",
   "description": "A customizable vue component than enables you to move and read back coordinates. You can also restrict, snap, and customize movement.",
   "author": "Ron Gilchrist (thewebkid)",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": false,
   "scripts": {
     "build": "bili --name index --plugin vue --vue.css false"

@@ -28,18 +28,16 @@
     cursor: pointer;
   }
   .testmove {
-  display:block;
-  position: absolute;
-  top: 0;
-  height: 150px;
-  width: 150px;
-  margin: 200px;
-  background: #333;
-  color: white;
-
-}
+    display:block;
+    position: absolute;
+    top: 0;
+    height: 150px;
+    width: 150px;
+    margin: 200px;
+    background: #333;
+    color: white;
+  }
   .modaltitle {
-
     background: blue;
     display:block;
     width:100%;

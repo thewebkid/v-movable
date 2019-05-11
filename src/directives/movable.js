@@ -1,7 +1,8 @@
 import Vue from 'vue';
 
+//region utils
 const pxVal = v => Number(v.replace(/[^0-9]/g,''));
-const childOf = (pid,child) => {
+const childOf = (pid, child) => {
   while(child.getAttribute('moveid') !== pid){
     child = child.parentElement;
     if (child.tagName === 'BODY'){
@@ -25,26 +26,42 @@ const guid = ()=> 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, functi
   const v = c === 'x' ? r : (r & 0x3 | 0x8);
   return v.toString(16);
 });
+//endregion
 
 Vue.directive('movable',{
   update(el,binding){
-    //let target = binding.value.target || el;
+
     if(el.getAttribute('moveid')){
+      return;//don't continuously rebind
+    }
+
+    let args = binding.value;
+
+    if (!!args.disabled){
       return;
     }
-    let args = binding.value;
     let grid = args.grid || 1;
-    let bounds = args.bounds || null; /*{ // boundaries from start of move
-			x: [null, null], // min. max
-			y: [null, null] // min, max
-			};*/
+    let bounds = args.bounds || null;
+    const directionalBounds = v => Array.isArray(v) ? v : !isNaN(Number(v)) ?
+      [Math.min(0,Number(v)), Math.max(0,Number(v))] : [-Infinity,Infinity];
+    if (args.vertical){
+      bounds = {
+        x:[0,0],
+        y:directionalBounds(args.vertical)
+      }
+    } else if (args.horizontal){
+      bounds = {
+        y:[0,0],
+        x:directionalBounds(args.vertical)
+      }
+    }
     let actualBounds = { left: null, top: null };
     let target = args.target || el;
     target.style.touchAction = 'none';
-    let moveid = guid();
-    let targetId = 'target' + moveid;
+    let moveId = guid();
+    let targetId = 'target' + moveId;
     target.setAttribute('moveid',targetId);
-    el.setAttribute('moveid', moveid);
+    el.setAttribute('moveid', moveId);
 
     let onstart = args.onstart;
     let onmove = args.onmove;
@@ -57,11 +74,8 @@ Vue.directive('movable',{
       setBounds();
       document.body.addEventListener('pointerdown', (event) => {
         let etarget = event.target;
-        //let mid = etarget.getAttribute('moveid');
-        if (target.classList.contains('disabled') || etarget.classList.contains('fa-close')) {
-          return;
-        }
-        else if (etarget.getAttribute('moveid') === targetId || !childOf(moveid,etarget) || isMoving) {
+
+        if (etarget.getAttribute('move-disabled') || etarget.getAttribute('moveid') === targetId || !childOf(moveId,etarget) || isMoving) {
           return;
         }
 
@@ -75,7 +89,6 @@ Vue.directive('movable',{
 
         document.body.addEventListener('pointerup', unbind, false);
         document.body.addEventListener('pointermove', function (evt) {
-          //console.log(evt);
           if (pointerId !== undefined && evt.pointerId === pointerId) {
             motionHandler(evt);
           }
@@ -92,7 +105,7 @@ Vue.directive('movable',{
       }
       let css = {
         left: parseFloat(el.style.left) || 0,
-        top: parseFloat(el.offsetTop) || 0
+        top: parseFloat(el.style.top) || 0
       };
       if (bounds.x) {
         actualBounds.left = [css.left + bounds.x[0], css.left + bounds.x[1]];
@@ -123,6 +136,7 @@ Vue.directive('movable',{
       moveObj.maxX = actualBounds.left[0] + actualBounds.left[1];
       moveObj.maxY = actualBounds.top[0] + actualBounds.top[1];
       isMoving = true;
+      args.reposition(true);
       if (onstart) {
         onstart(moveObj);
       }
@@ -131,6 +145,7 @@ Vue.directive('movable',{
 
     const motionHandler = function (evt) {
       evt.stopPropagation();
+
       let newCoord = getCoord(evt);
       moveObj.moveDist = {
         x: newCoord.x - moveObj.mouseCoord.x,
@@ -173,6 +188,7 @@ Vue.directive('movable',{
       if (oncomplete)
         oncomplete(moveObj);
       isMoving = moveObj.isMoving = false;
+      args.reposition(false);
       if (event) {
         event.preventDefault();
       }
@@ -186,7 +202,10 @@ Vue.directive('movable',{
       coord.y = evt.pageY;
       return coord;
     };
-
+    const rpcCall = (args) => {
+      console.log('rpc call tbi',args);
+    };
     init();
+    args.directiveInit(rpcCall);
   }
 });
