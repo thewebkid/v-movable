@@ -1,4 +1,4 @@
-# v-movable [![npm version](https://badge.fury.io/js/v-movable.svg)](https://badge.fury.io/js/v-movable)
+# v-movable [![npm version](https://badge.fury.io/js/v-movable.svg)](https://badge.fury.io/js/v-movable) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 A vue component or component wrapper that makes an element movable and its movements can be customized.
 
 ## Installation
@@ -30,7 +30,7 @@ A vue component or component wrapper that makes an element movable and its movem
 - **@complete**: fires after the pointerup event on the element 
 
 ### Usage
-
+```html
     <template>
       <div>
          <movable/>
@@ -61,7 +61,7 @@ A vue component or component wrapper that makes an element movable and its movem
         color: white;
       }
     </style>
-
+```
 
 ### Disclaimer
 This is in alpha. I have bugs.
