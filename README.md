@@ -2,13 +2,11 @@
 A vue component or component wrapper that makes an element movable and its movements can be customized.
 
 ## Installation
-`npm install --save v-movable;`
+`npm install --save v-movable`
 
 ### Initialize in main.js
-`import movable from "v-movable";`
-
-`Vue.use(movable);`
-
+    import movable from "v-movable";`
+    Vue.use(movable);`
 
 
 
@@ -22,8 +20,9 @@ A vue component or component wrapper that makes an element movable and its movem
 - **target**: _String (vue ref)_ - ref to element other than the component (e.g., wrap modal title in movable, and set target to the modal-body element ref)
 - **bounds**: _{x:[min,max],y:[min,max]_}. Both x and y default to [-Infinity,Infinity]. Set to [min,max] ([0,0] to restrict the axis)
 - **vertical**: _[min, max]_ - constrain movement to y axis within min and max provided. Shorthand for bounds="{x:[0,0],y:[min,max]}"
-- **vertical**: _[min, max]_ - constrain movement to x axis within min and max provided. Shorthand for bounds="{y:[0,0],x:[min,max]}" 
+- **horizontal**: _[min, max]_ - constrain movement to x axis within min and max provided. Shorthand for bounds="{y:[0,0],x:[min,max]}" 
 - **grid**: _Int_ - defaults to 1. snap to grid size in pixels.
+- **disabled**: _Bool_ - disables moving
 
 ### Events (prefer over attrib handlers above)
 - **@start**: fires immediately after the pointerdown event on the element
