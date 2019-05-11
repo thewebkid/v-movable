@@ -1,4 +1,4 @@
-# v-movable
+# v-movable [![npm version](https://badge.fury.io/js/v-movable.svg)](https://badge.fury.io/js/v-movable)
 A vue component or component wrapper that makes an element movable and its movements can be customized.
 
 ## Installation
