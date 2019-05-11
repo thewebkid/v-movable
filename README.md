@@ -2,11 +2,11 @@
 A vue component or component wrapper that makes an element movable and its movements can be customized.
 
 ## Installation
-`npm install --save v-movable`
+    npm i --save v-movable
 
 ### Initialize in main.js
-    import movable from "v-movable";`
-    Vue.use(movable);`
+    import movable from "v-movable";
+    Vue.use(movable);
 
 
 
