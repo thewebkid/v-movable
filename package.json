@@ -3,7 +3,7 @@
   "description": "A customizable vue component than enables you to move and read back coordinates. You can also restrict, snap, and customize movement.",
   "author": "Ron Gilchrist (thewebkid)",
   "keywords": ["vue","vue-component","javascript","movable","movable element"],
-  "version": "1.0.0-beta.0",
+  "version": "0.2.2",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -18,11 +18,13 @@
     "url": "https://github.com/thewebkid/v-movable.git"
   },
   "dependencies": {
+    "vue": "^2.6.10",
+    "vue-template-compiler": "^2.5.21"
+  },
+  "devDependencies": {
     "bili": "^4.7.4",
     "core-js": "^2.6.5",
     "postcss": "^7.0.16",
-    "rollup-plugin-vue": "^5.0.0",
-    "vue": "^2.6.10",
-    "vue-template-compiler": "^2.5.21"
+    "rollup-plugin-vue": "^5.0.0"
   }
 }

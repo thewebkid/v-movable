@@ -31,7 +31,7 @@ const guid = ()=> 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, functi
 Vue.directive('movable',{
   update(el,binding){
 
-    if(el.getAttribute('moveid')){
+    if (el.getAttribute('moveid')){
       return;//don't continuously rebind
     }
 
@@ -43,7 +43,7 @@ Vue.directive('movable',{
     let grid = args.grid || 1;
     let bounds = args.bounds || null;
     const directionalBounds = v => Array.isArray(v) ? v : !isNaN(Number(v)) ?
-      [Math.min(0,Number(v)), Math.max(0,Number(v))] : [-Infinity,Infinity];
+      [Math.min(0,Number(v)), Math.max(0,Number(v))] : [-Infinity, Infinity];
     if (args.vertical){
       bounds = {
         x:[0,0],
@@ -161,7 +161,6 @@ Vue.directive('movable',{
       if (onstart) {
         onstart(moveObj);
       }
-      //el.trigger('dragstart');
     };
 
     const motionHandler = function (evt) {
@@ -202,13 +201,12 @@ Vue.directive('movable',{
     const unbind = (evt) => {
       pointerId = null;
       isMoving = false;
-      document.body.removeEventListener(pointerEvents.move,motionHandler);
-
+      document.body.removeEventListener(pointerEvents.move, motionHandler);
       moveEnd(evt);
     };
 
     const moveEnd = (event) => {
-      document.body.removeEventListener(pointerEvents.end,unbind);
+      document.body.removeEventListener(pointerEvents.end, unbind);
       if (oncomplete)
         oncomplete(moveObj);
       isMoving = moveObj.isMoving = false;
@@ -217,7 +215,6 @@ Vue.directive('movable',{
       if (event) {
         event.preventDefault();
       }
-
     };
     //#endregion
 
@@ -227,10 +224,13 @@ Vue.directive('movable',{
       coord.y = evt.pageY;
       return coord;
     };
+
     const rpcCall = (args) => {
       console.log('rpc call tbi',args);
     };
+
     init();
+
     args.directiveInit(rpcCall);
   }
 });

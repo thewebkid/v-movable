@@ -63,5 +63,6 @@ A vue component or component wrapper that makes an element movable and its movem
     </style>
 ```
 
+
 ### Disclaimer
-This is in alpha. I have bugs.
+This is in active development. Stability not guaranteed. Please file github issues for bugs/features. 
