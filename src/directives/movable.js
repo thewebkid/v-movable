@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 //region utils
-const pxVal = v => Number(v.replace(/[^0-9]/g,''));
+const pxVal = v => Number(v.replace(/[^0-9.]/g,''));
 const childOf = (pid, child) => {
   while(child.getAttribute('moveid') !== pid){
     child = child.parentElement;
@@ -66,34 +66,54 @@ Vue.directive('movable',{
     let onstart = args.onstart;
     let onmove = args.onmove;
     let oncomplete = args.oncomplete;
-    let moveObj = {}; // var placeholder for instance of move function
+    let moveObj = {};
     let isMoving;
     let pointerId;
-
+    const pointerEvents = window.MSPointerEvent ?
+        { start:'MSPointerDown',move:'MSPointerMove',end:'MSPointerUp'} : //IE, grr
+      window.PointerEvent ?
+        { start:'pointerdown',move:'pointermove',end:'pointerup'} ://most everyone
+      'ontouchstart' in document.documentElement ?
+        { start:'touchstart',move:'touchmove',end:'touchend'} :
+        { start:'mousedown',move:'mousemove',end:'mouseup'};//safari. grr
     const init = () => {
       setBounds();
-      document.body.addEventListener('pointerdown', (event) => {
-        let etarget = event.target;
+      const halt=etarget=>
+        etarget.getAttribute('move-disabled') || etarget.getAttribute('moveid') === targetId || !childOf(moveId, etarget) || isMoving;
 
-        if (etarget.getAttribute('move-disabled') || etarget.getAttribute('moveid') === targetId || !childOf(moveId,etarget) || isMoving) {
-          return;
-        }
-
-        document.body.setPointerCapture(event.pointerId);
-        event.preventDefault();
-        event.stopPropagation();
-        if (event.pointerId !== undefined) {
-          pointerId = event.pointerId;
-        }
-        moveInit(event);
-
-        document.body.addEventListener('pointerup', unbind, false);
-        document.body.addEventListener('pointermove', function (evt) {
-          if (pointerId !== undefined && evt.pointerId === pointerId) {
-            motionHandler(evt);
+      if (window.PointerEvent || window.MSPointerEvent) {
+        document.body.addEventListener(pointerEvents.start, (event) => {
+          if (halt(event.target)) {
+            return;
           }
+          document.body.setPointerCapture(event.pointerId);
+          event.preventDefault();
+          event.stopPropagation();
+          if (event.pointerId !== undefined) {
+            pointerId = event.pointerId;
+          }
+          moveInit(event);
+          document.body.addEventListener(pointerEvents.end, unbind, false);
+          document.body.addEventListener(pointerEvents.move, function (evt) {
+            if (pointerId !== undefined && evt.pointerId === pointerId) {
+              motionHandler(evt);
+            }
+          }, false);
         }, false);
-      }, false);
+      }
+      else {
+        const start = (event)=> {
+          if (halt(event.target)) {
+            return;
+          }
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          moveInit(event);
+          document.body.addEventListener(pointerEvents.end, unbind, false);
+          document.body.addEventListener(pointerEvents.move, motionHandler, false);
+        };
+        target.addEventListener(pointerEvents.start,  start, false)
+      }
     };
 
     function setBounds(newBounds) {
@@ -182,10 +202,13 @@ Vue.directive('movable',{
     const unbind = (evt) => {
       pointerId = null;
       isMoving = false;
+      document.body.removeEventListener(pointerEvents.move,motionHandler);
+
       moveEnd(evt);
     };
 
     const moveEnd = (event) => {
+      document.body.removeEventListener(pointerEvents.end,unbind);
       if (oncomplete)
         oncomplete(moveObj);
       isMoving = moveObj.isMoving = false;
