@@ -156,6 +156,7 @@ Vue.directive('movable',{
       moveObj.maxX = actualBounds.left[0] + actualBounds.left[1];
       moveObj.maxY = actualBounds.top[0] + actualBounds.top[1];
       isMoving = true;
+      target.classList.add('is-moving');
       args.reposition(true);
       args.eventBroker({name:'start',args:moveObj});
       if (onstart) {
@@ -206,6 +207,7 @@ Vue.directive('movable',{
     };
 
     const moveEnd = (event) => {
+      target.classList.remove('is-moving');
       document.body.removeEventListener(pointerEvents.end, unbind);
       if (oncomplete)
         oncomplete(moveObj);
