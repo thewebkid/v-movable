@@ -1,7 +1,7 @@
 import Vue from 'vue';
 
 //region utils
-const pxVal = v => Number(v.replace(/[^0-9.]/g,''));
+const pxVal = v => isFinite(v) ? Number(v) : Number(v.replace(/[^0-9.\-]/g,''));
 const childOf = (pid, child) => {
   while(child.getAttribute('moveid') !== pid){
     child = child.parentElement;
@@ -52,7 +52,7 @@ Vue.directive('movable',{
     } else if (args.horizontal){
       bounds = {
         y:[0,0],
-        x:directionalBounds(args.vertical)
+        x:directionalBounds(args.horizontal)
       }
     }
     let actualBounds = { left: null, top: null };
@@ -124,8 +124,8 @@ Vue.directive('movable',{
         return;
       }
       let css = {
-        left: parseFloat(el.style.left) || 0,
-        top: parseFloat(el.style.top) || 0
+        left: pxVal(target.style.left) || 0,
+        top: pxVal(target.style.top) || 0
       };
       if (bounds.x) {
         actualBounds.left = [css.left + bounds.x[0], css.left + bounds.x[1]];
@@ -138,9 +138,7 @@ Vue.directive('movable',{
         actualBounds.top = [0 - Infinity, Infinity];
       }
     }
-
     //#endregion
-
 
 
     //#region event handlers
@@ -156,7 +154,6 @@ Vue.directive('movable',{
       moveObj.maxX = actualBounds.left[0] + actualBounds.left[1];
       moveObj.maxY = actualBounds.top[0] + actualBounds.top[1];
       isMoving = true;
-      target.classList.add('is-moving');
       args.reposition(true);
       args.eventBroker({name:'start',args:moveObj});
       if (onstart) {
@@ -207,7 +204,6 @@ Vue.directive('movable',{
     };
 
     const moveEnd = (event) => {
-      target.classList.remove('is-moving');
       document.body.removeEventListener(pointerEvents.end, unbind);
       if (oncomplete)
         oncomplete(moveObj);

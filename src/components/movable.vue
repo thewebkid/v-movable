@@ -1,7 +1,7 @@
 <template>
   <component :is="tag" :move-disabled="disabled"
-             :style="{top:px(top),left:px(left)}"
-             class="--movable-base" :class="className"
+             :style="position"
+             class="--movable-base" :class="cssClass"
              v-movable="moveArgs">
     <slot></slot>
   </component>
@@ -20,11 +20,28 @@
         moveArgs:{},
         isMoving:false,
         rpcFunc:function(){}
+
       };
     },
     computed:{
+      cssClass(){
+        let obj = {};
+        let c = this.className;
+        if (typeof c==='object'){
+          obj = c;
+        }else if (typeof c==='string'){
+          c.split(' ').forEach(cn=>obj[cn]=true);
+        }
+        if (this.isMoving){
+          obj['is-moving']=true;
+        }
+        return obj;
+      },
       px(){
         return v => `${v}px`;
+      },
+      position(){
+        return this['events-only'] ? {}: {top:this.px(this.top),left:this.px(this.left)}
       }
     },
     name: 'movable',
@@ -46,11 +63,15 @@
           eventBroker:this.eventBroker
         };
         const availArgs = ['bounds','onstart','oncomplete',
-          'onmove', 'grid', 'vertical','horizontal','disabled'];
+          'onmove', 'grid', 'vertical','horizontal','disabled','events-only'];
         availArgs.filter(a => vm[a] !== undefined)
           .forEach(prop => moveArgs[prop] = vm[prop]);
         if (this.target){
-          moveArgs.target = vm.$parent.$refs[this.target];
+          if (this.target ==='parent'){
+            moveArgs.target = vm.$el.parentElement;
+          }else {
+            moveArgs.target = vm.$parent.$refs[this.target];
+          }
         }
         this.moveArgs = moveArgs;
       },
@@ -63,7 +84,7 @@
       reposition(pos){
         if (typeof pos === 'object') {
           //console.log({pos});
-          if (this.moveArgs.target) {
+          if (this.moveArgs.target && !this['events-only']) {
             this.moveArgs.target.style.left = pos.left + 'px';
             this.moveArgs.target.style.top = pos.top + 'px';
             return;
@@ -85,10 +106,8 @@
         });
       }
     },
-    props: ['tagName', 'target', 'bounds',
-      'onstart', 'oncomplete', 'onmove',
-      'posTop', 'posLeft', 'className',
-      'grid', 'vertical','horizontal','disabled'],
+    props: ['tagName', 'target', 'bounds', 'onstart', 'oncomplete', 'onmove',
+      'posTop', 'posLeft', 'className', 'grid', 'vertical','horizontal','disabled'],
     mounted(mnt){
       this.init();
     },
