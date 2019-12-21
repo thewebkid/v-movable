@@ -11,23 +11,23 @@ A vue component or component wrapper that makes an element movable and its movem
     Vue.use(movable);
 
 ### Options (element attributes)
-- **className**: _String_ - css classes space delimited 
+- **className**: _String_ - css classes space delimited
 - **tagName**: _String_ - div, span, etc. [not functional yet]
 - **posTop/posLeft**: initial coordinate
 - **onstart**: _handler_ - fires immediately after the pointerdown event on the element
 - **onmove**: _handler_ - fires continuously while moving
-- **oncomplete**: _handler_ - fires after the pointerup event on the element 
+- **oncomplete**: _handler_ - fires after the pointerup event on the element
 - **target**: _String (vue ref)_ - ref to element other than the component (e.g., wrap modal title in movable, and set target to the modal-body element ref)
 - **bounds**: _{x:[min,max],y:[min,max]_}. Both x and y default to [-Infinity,Infinity]. Set to [min,max] ([0,0] to restrict the axis)
 - **vertical**: _[min, max]_ - constrain movement to y axis within min and max provided. Shorthand for bounds="{x:[0,0],y:[min,max]}"
-- **horizontal**: _[min, max]_ - constrain movement to x axis within min and max provided. Shorthand for bounds="{y:[0,0],x:[min,max]}" 
+- **horizontal**: _[min, max]_ - constrain movement to x axis within min and max provided. Shorthand for bounds="{y:[0,0],x:[min,max]}"
 - **grid**: _Int_ - defaults to 1. snap to grid size in pixels.
 - **disabled**: _Bool_ - disables moving
 
 ### Events (prefer over attrib handlers above)
 - **@start**: fires immediately after the pointerdown event on the element
 - **@move**: fires continuously while moving
-- **@complete**: fires after the pointerup event on the element 
+- **@complete**: fires after the pointerup event on the element
 
 ### Usage
 ```html
@@ -52,7 +52,7 @@ A vue component or component wrapper that makes an element movable and its movem
         width: 150px;
         margin: 200px;
         background: #333;
-        color: white;  
+        color: white;
       }
       .modaltitle {
         background: blue;
@@ -64,5 +64,3 @@ A vue component or component wrapper that makes an element movable and its movem
 ```
 
 
-### Disclaimer
-This is in active development. Stability not guaranteed. Please file github issues for bugs/features. 
