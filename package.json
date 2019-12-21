@@ -2,7 +2,13 @@
   "name": "v-movable",
   "description": "A customizable vue component than enables you to move and read back coordinates. You can also restrict, snap, and customize movement.",
   "author": "Ron Gilchrist (thewebkid)",
-  "keywords": ["vue","vue-component","draggable","movable","movable element"],
+  "keywords": [
+    "vue",
+    "vue-component",
+    "draggable",
+    "movable",
+    "movable element"
+  ],
   "version": "0.3.0",
   "license": "MIT",
   "private": false,
