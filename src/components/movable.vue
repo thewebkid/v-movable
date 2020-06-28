@@ -1,9 +1,10 @@
 <template>
-  <component :is="tag" :move-disabled="disabled"
-             :style="position"
-             class="--movable-base" :class="cssClass"
-             v-movable="moveArgs">
-    <slot></slot>
+  <component
+    :is="tag" :move-disabled="disabled"
+    :style="position"
+    class="--movable-base" :class="cssClass"
+    v-movable="moveArgs">
+    <slot />
   </component>
 </template>
 
@@ -15,12 +16,12 @@
     data: () => {
       return {
         tag:'div',
-        top:0,
-        left:0,
+        top:undefined,
+        left:undefined,
         moveArgs:{},
         isMoving:false,
-        rpcFunc:function(){}
-
+        rpcFunc:function(){},
+        hasInit:false
       };
     },
     computed:{
@@ -41,7 +42,8 @@
         return v => `${v}px`;
       },
       position(){
-        return this['events-only'] ? {}: {top:this.px(this.top),left:this.px(this.left)}
+        return this['events-only'] || !this.init ? {} :
+          {top:this.px(this.top),left:this.px(this.left)}
       }
     },
     name: 'movable',
@@ -51,19 +53,21 @@
         if (vm['tagName']){
           this.tag = this.tagName;
         }
-        if (vm['posTop']){
-          this.top = Number(this.posTop);
-        }
-        if (vm['posLeft']){
-          this.left = Number(this.posLeft);
-        }
+
+        this.top  = this['posTop'] ? Number(this.posTop) : this.$el.offsetTop;//Number(this.position.top.replace('px',''));
+        this.left = this['posLeft'] ? Number(this.posLeft) : this.$el.offsetLeft;//Number(this.position.left.replace('px',''));
+        vm.hasInit = true;
+
         let moveArgs = {
           reposition:this.reposition,
           directiveInit:this.directiveInit,
           eventBroker:this.eventBroker
         };
-        const availArgs = ['bounds','onstart','oncomplete',
-          'onmove', 'grid', 'vertical','horizontal','disabled','events-only'];
+        const availArgs = [
+          'bounds','onstart','oncomplete',
+          'onmove', 'grid', 'vertical', 'horizontal',
+          'disabled', 'events-only'
+        ];
         availArgs.filter(a => vm[a] !== undefined)
           .forEach(prop => moveArgs[prop] = vm[prop]);
         if (this.target){
@@ -74,6 +78,7 @@
           }
         }
         this.moveArgs = moveArgs;
+
       },
       eventBroker({name,args}){
         this.$emit(name, args);
@@ -107,7 +112,7 @@
       }
     },
     props: ['tagName', 'target', 'bounds', 'onstart', 'oncomplete', 'onmove',
-      'posTop', 'posLeft', 'className', 'grid', 'vertical','horizontal','disabled'],
+      'posTop', 'posLeft', 'events-only', 'grid', 'vertical','horizontal','disabled'],
     mounted(mnt){
       this.init();
     },

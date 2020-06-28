@@ -1,7 +1,7 @@
 # v-movable [![npm version](https://badge.fury.io/js/v-movable.svg)](https://badge.fury.io/js/v-movable) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 A vue component or component wrapper that makes an element movable and its movements can be customized.
 
-[Live Demo](http://preview.thewebkid.com/modules/v-movable)
+[Live Demo](http://thewebkid.com/modules/v-movable)
 
 ## Installation
     npm i --save v-movable
@@ -11,12 +11,7 @@ A vue component or component wrapper that makes an element movable and its movem
     Vue.use(movable);
 
 ### Options (element attributes)
-- **className**: _String_ - css classes space delimited
-- **tagName**: _String_ - div, span, etc. [not functional yet]
 - **posTop/posLeft**: initial coordinate
-- **onstart**: _handler_ - fires immediately after the pointerdown event on the element
-- **onmove**: _handler_ - fires continuously while moving
-- **oncomplete**: _handler_ - fires after the pointerup event on the element
 - **target**: _String (vue ref)_ - ref to element other than the component (e.g., wrap modal title in movable, and set target to the modal-body element ref)
 - **bounds**: _{x:[min,max],y:[min,max]_}. Both x and y default to [-Infinity,Infinity]. Set to [min,max] ([0,0] to restrict the axis)
 - **vertical**: _[min, max]_ - constrain movement to y axis within min and max provided. Shorthand for bounds="{x:[0,0],y:[min,max]}"
@@ -34,8 +29,8 @@ A vue component or component wrapper that makes an element movable and its movem
     <template>
       <div>
          <movable/>
-         <div class="testmove" ref="someTarget">
-           <movable class="modaltitle" target="someTarget">modal behavior</movable>`
+         <div class="testmove" ref="parentEl">
+           <movable class="modaltitle" target="parentEl">modal behavior</movable>`
            <span>not movable</span>
          </div>
          <movable class="testmove" posTop="444" :grid="20"><span>grid:20</span></movable>
