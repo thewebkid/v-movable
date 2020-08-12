@@ -2,7 +2,7 @@
   <component
     :is="tag" :move-disabled="disabled"
     :style="position"
-    class="--movable-base" :class="cssClass"
+    class="--movable-base"
     v-movable="moveArgs">
     <slot />
   </component>
@@ -25,19 +25,7 @@
       };
     },
     computed:{
-      cssClass(){
-        let obj = {};
-        let c = this.className;
-        if (typeof c==='object'){
-          obj = c;
-        }else if (typeof c==='string'){
-          c.split(' ').forEach(cn=>obj[cn]=true);
-        }
-        if (this.isMoving){
-          obj['is-moving']=true;
-        }
-        return obj;
-      },
+
       px(){
         return v => `${v}px`;
       },
@@ -64,7 +52,7 @@
           eventBroker:this.eventBroker
         };
         const availArgs = [
-          'bounds','onstart','oncomplete',
+          'bounds','onstart','oncomplete', 'shiftKey',
           'onmove', 'grid', 'vertical', 'horizontal',
           'disabled', 'events-only'
         ];
@@ -112,7 +100,8 @@
       }
     },
     props: ['tagName', 'target', 'bounds', 'onstart', 'oncomplete', 'onmove',
-      'posTop', 'posLeft', 'events-only', 'grid', 'vertical','horizontal','disabled'],
+      'posTop', 'posLeft', 'events-only', 'grid', 'vertical','horizontal',
+      'disabled', 'shiftKey'],
     mounted(mnt){
       this.init();
     },

@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-    <div class="testmove" ref="someTarget">
-      <movable class="modaltitle" target="someTarget">modal behavior</movable>
-      <span>not movable</span>
+    <div style="position:relative; margin:50px;">
+      <div class="testmove" ref="someTarget">
+        <movable class="modaltitle" target="someTarget">modal behavior</movable>
+        <span>not movable</span>
+      </div>
+      <movable class="testmove" posTop="444" :grid="20"><span>grid:20</span></movable>
+      <movable class="testmove" posTop="222" posLeft="222" shiftKey="true"><span>Shift Key Behavior</span></movable>
+      <movable class="testmove" posLeft="444" :bounds="{x:[0,0]}"><span>bounds:only y</span></movable>
+      <movable class="testmove" posTop="444" posLeft="444" :bounds="{y:[0,0]}"><span>bounds:only x</span></movable>
     </div>
-    <movable class="testmove" posTop="444" :grid="20"><span>grid:20</span></movable>
-    <movable class="testmove" posLeft="444" :bounds="{x:[0,0]}"><span>bounds:only y</span></movable>
-    <movable class="testmove" posTop="444" posLeft="444" :bounds="{y:[0,0]}"><span>bounds:only x</span></movable>
   </div>
 </template>
 
@@ -22,7 +25,7 @@
   body{
     padding:0;
     margin:0;
-    font-family: Helvetica,Arial;
+    font-family: Helvetica, Arial;
   }
   .movable{
     cursor: pointer;
@@ -33,7 +36,7 @@
     top: 0;
     height: 150px;
     width: 150px;
-    margin: 200px;
+
     background: #333;
     color: white;
   }

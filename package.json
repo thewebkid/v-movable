@@ -9,7 +9,7 @@
     "movable",
     "movable element"
   ],
-  "version": "1.0.0-beta.8",
+  "version": "0.3.1",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -25,15 +25,15 @@
     "url": "https://github.com/thewebkid/v-movable.git"
   },
   "dependencies": {
-    "rollup-plugin-vue": "^5.1.7",
+    "rollup-plugin-vue": "^5.1.9",
     "vue": "^2.6.11",
     "vue-runtime-helpers": "^1.1.2",
     "vue-template-compiler": "^2.6.11"
   },
   "devDependencies": {
-    "@vue/cli-service": "^4.3.1",
-    "bili": "^4.10.0",
+    "@vue/cli-service": "^4.5.3",
+    "bili": "^4.10.1",
     "core-js": "^3.6.5",
-    "postcss": "^7.0.30"
+    "postcss": "^7.0.32"
   }
 }

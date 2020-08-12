@@ -17,6 +17,7 @@ A vue component or component wrapper that makes an element movable and its movem
 - **vertical**: _[min, max]_ - constrain movement to y axis within min and max provided. Shorthand for bounds="{x:[0,0],y:[min,max]}"
 - **horizontal**: _[min, max]_ - constrain movement to x axis within min and max provided. Shorthand for bounds="{y:[0,0],x:[min,max]}"
 - **grid**: _Int_ - defaults to 1. snap to grid size in pixels.
+- **shiftKey** _Bool_ - any truthy value enables shift key to constrain movement to either x or y axis (whichever is greater). Setting any bounds option automatically disables shift key behavior.
 - **disabled**: _Bool_ - disables moving
 
 ### Events (prefer over attrib handlers above)
@@ -27,13 +28,13 @@ A vue component or component wrapper that makes an element movable and its movem
 ### Usage
 ```html
     <template>
-      <div>
-         <movable/>
+      <div style="position:relative; margin:50px;">
          <div class="testmove" ref="parentEl">
            <movable class="modaltitle" target="parentEl">modal behavior</movable>`
            <span>not movable</span>
          </div>
          <movable class="testmove" posTop="444" :grid="20"><span>grid:20</span></movable>
+         <movable class="testmove" posTop="222" posLeft="222" shiftKey="true"><span>Shift Key Behavior</span></movable>
          <movable class="testmove" posLeft="444" :bounds="{x:[0,0]}"><span>bounds:only y</span></movable>
          <movable class="testmove" posTop="444" posLeft="444" :bounds="{y:[0,0]}"><span>bounds:only x</span></movable>
        </div>

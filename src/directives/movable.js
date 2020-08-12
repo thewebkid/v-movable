@@ -1,5 +1,7 @@
 import Vue from 'vue';
 
+let shift = false;
+
 //region utils
 const pxVal = v => isFinite(v) ? Number(v) : Number(v.replace(/[^0-9.\-]/g,''));
 const childOf = (pid, child) => {
@@ -36,10 +38,10 @@ Vue.directive('movable',{
     }
 
     let args = binding.value;
-
     if (!!args.disabled){
       return;
     }
+    let shiftBehavior = !!args.shiftKey;
     let grid = args.grid || 1;
     let bounds = args.bounds || null;
     const directionalBounds = v => Array.isArray(v) ? v : !isNaN(Number(v)) ?
@@ -170,22 +172,30 @@ Vue.directive('movable',{
         y: newCoord.y - moveObj.mouseCoord.y
       };
       moveObj.mouseCoord = newCoord;
-      moveObj.css.top += moveObj.moveDist.y;
-      moveObj.css.left += moveObj.moveDist.x;
+
       moveObj.totalDist = {
         x: moveObj.totalDist.x + moveObj.moveDist.x,
         y: moveObj.totalDist.y + moveObj.moveDist.y
       };
-
+      moveObj.css.top = moveObj.totalDist.y;
+      moveObj.css.left = moveObj.totalDist.x;
       moveObj.gridCss = {
         left: (Math.round(moveObj.totalDist.x / grid) * grid) + moveObj.startCoord.x,
         top: (Math.round(moveObj.totalDist.y / grid) * grid) + moveObj.startCoord.y
       };
       moveObj.css = moveObj.gridCss;
-
-
-      moveObj.css.top = Math.min(Math.max(actualBounds.top[0], moveObj.css.top), actualBounds.top[1]);
-      moveObj.css.left = Math.min(Math.max(actualBounds.left[0], moveObj.css.left), actualBounds.left[1]);
+      const isInfinite = bounds => bounds === undefined || (Array.isArray(bounds) && bounds[0]<-99999 && bounds[1] > 99999);
+      if (shiftBehavior && evt.shiftKey && (bounds === null || isInfinite(bounds.x) && isInfinite(bounds.y))){
+        let {x,y} = moveObj.totalDist;
+        if (Math.abs(x) > Math.abs(y)){
+          moveObj.css.top = moveObj.startCoord.y;
+        }else{
+          moveObj.css.left = moveObj.startCoord.x;
+        }
+      }else {
+        moveObj.css.top = Math.min(Math.max(actualBounds.top[0], moveObj.css.top), actualBounds.top[1]);
+        moveObj.css.left = Math.min(Math.max(actualBounds.left[0], moveObj.css.left), actualBounds.left[1]);
+      }
       moveObj.pctX = Math.max(actualBounds.left[0], moveObj.css.left) / moveObj.maxX;
       moveObj.pctY = Math.max(actualBounds.top[0], moveObj.css.top) / moveObj.maxY;
       args.reposition(moveObj.css);
@@ -223,8 +233,11 @@ Vue.directive('movable',{
       return coord;
     };
 
-    const rpcCall = (args) => {
-      console.log('rpc call tbi',args);
+    const rpcCall = (action,arg) => {
+      console.log({rpc:{action,arg}})
+      if (action === 'shift'){
+        shift=arg;
+      }
     };
 
     init();
