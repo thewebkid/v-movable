@@ -20,7 +20,7 @@ A vue component or component wrapper that makes an element movable and its movem
 - **shiftKey** _Bool_ - any truthy value enables shift key to constrain movement to either x or y axis (whichever is greater). Setting any bounds option automatically disables shift key behavior.
 - **disabled**: _Bool_ - disables moving
 
-### Events (prefer over attrib handlers above)
+### Events
 - **@start**: fires immediately after the pointerdown event on the element
 - **@move**: fires continuously while moving
 - **@complete**: fires after the pointerup event on the element
