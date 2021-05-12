@@ -34,6 +34,6 @@
     "@vue/cli-service": "^4.5.3",
     "bili": "^4.10.1",
     "core-js": "^3.6.5",
-    "postcss": "^7.0.32"
+    "postcss": "^8.2.10"
   }
 }
