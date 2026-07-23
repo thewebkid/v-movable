@@ -1,7 +1,10 @@
-import Vue from 'vue';
-import movable from './components/movable.vue';
+import { VMovable } from './VMovable.js';
+
+export { VMovable };
+
+// Default plugin: app.use(VMovable) registers <v-movable> globally.
 export default {
-  install(Vue) {
-    Vue.component("movable", movable);
-  }
+  install(app) {
+    app.component('v-movable', VMovable);
+  },
 };

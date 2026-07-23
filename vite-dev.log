@@ -1,0 +1,15 @@
+npm warn Unknown env config "devdir". This will error in a future major version of npm. See `npm help npmrc` for supported config options.
+npm notice run v-movable@1.0.0 npx
+npm notice run vite --port 5200 --strictPort
+
+  VITE v5.4.21  ready in 433 ms
+
+  ➜  Local:   http://localhost:5200/
+  ➜  Network: use --host to expose
+  ➜  press h + enter to show help
+9:05:12 PM [vite] hmr update /src/App.vue?vue&type=style&index=0&lang.css
+9:10:39 PM [vite] page reload coverage/lcov-report/src/index.html
+9:10:39 PM [vite] page reload coverage/lcov-report/index.html
+9:10:39 PM [vite] page reload coverage/lcov-report/src/VMovable.js.html
+9:10:39 PM [vite] page reload coverage/lcov-report/test/index.html
+9:10:39 PM [vite] page reload coverage/lcov-report/test/test.utilities.js.html

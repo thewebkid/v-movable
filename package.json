@@ -1,39 +1,62 @@
 {
   "name": "v-movable",
-  "description": "A customizable vue component than enables you to move and read back coordinates. You can also restrict, snap, and customize movement.",
+  "description": "A Vue 3 component that wraps lit-movable — drag/move any element, with grid snap, relative bounds, axis lock, and rich move state.",
   "author": "Ron Gilchrist (thewebkid)",
   "keywords": [
     "vue",
+    "vue3",
     "vue-component",
     "draggable",
     "movable",
-    "movable element"
+    "movable element",
+    "lit-movable"
   ],
-  "version": "0.3.2",
+  "version": "1.0.0",
   "license": "MIT",
   "private": false,
-  "scripts": {
-    "build": "bili",
-    "serve": "vue-cli-service serve"
+  "type": "module",
+  "main": "./dist/v-movable.js",
+  "module": "./dist/v-movable.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/v-movable.js",
+      "default": "./dist/v-movable.js"
+    }
   },
-  "main": "./dist/index.js",
   "files": [
-    "dist/*"
+    "dist",
+    "index.d.ts",
+    "README.md"
   ],
   "repository": {
     "type": "git",
     "url": "https://github.com/thewebkid/v-movable.git"
   },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "web-test-runner --config web-test-runner.config.mjs"
+  },
+  "peerDependencies": {
+    "vue": "^3.2.0"
+  },
   "dependencies": {
-    "rollup-plugin-vue": "^5.1.9",
-    "vue": "^2.6.11",
-    "vue-runtime-helpers": "^1.1.2",
-    "vue-template-compiler": "^2.6.11"
+    "lit-movable": "^1.0.1"
   },
   "devDependencies": {
-    "@vue/cli-service": "^4.5.3",
-    "bili": "^4.10.1",
-    "core-js": "^3.6.5",
-    "postcss": "^7.0.32"
+    "@open-wc/testing": "^4.0.0",
+    "@vitejs/plugin-vue": "^5.0.0",
+    "@vue/babel-plugin-jsx": "^3.0.0",
+    "@vue/test-utils": "^2.4.0",
+    "@web/dev-server-esbuild": "^2.0.0",
+    "@web/test-runner": "^0.18.0",
+    "@web/test-runner-commands": "^0.9.0",
+    "@web/test-runner-puppeteer": "^0.15.0",
+    "lit": "^3.3.0",
+    "vite": "^5.4.0",
+    "vue": "^3.4.0"
   }
 }
