@@ -11,22 +11,23 @@
     "movable element",
     "lit-movable"
   ],
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "private": false,
   "type": "module",
-  "main": "./dist/v-movable.js",
-  "module": "./dist/v-movable.js",
+  "main": "index.js",
+  "module": "index.js",
   "types": "./index.d.ts",
   "exports": {
     ".": {
       "types": "./index.d.ts",
-      "import": "./dist/v-movable.js",
-      "default": "./dist/v-movable.js"
+      "import": "./index.js",
+      "default": "./index.js"
     }
   },
   "files": [
     "dist",
+    "index.js",
     "index.d.ts",
     "README.md"
   ],
