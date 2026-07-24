@@ -11,7 +11,7 @@
     "movable element",
     "lit-movable"
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "license": "MIT",
   "private": false,
   "type": "module",
@@ -31,6 +31,7 @@
     "index.d.ts",
     "README.md"
   ],
+  "homepage": "https://www.thewebkid.com/modules/v-movable",
   "repository": {
     "type": "git",
     "url": "https://github.com/thewebkid/v-movable.git"

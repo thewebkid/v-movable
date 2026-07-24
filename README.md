@@ -4,6 +4,8 @@ A **Vue 3** component that makes any element movable — drag, snap to a grid, c
 
 You only ever write `<v-movable>`. The custom element is registered for you — no Lit, no `isCustomElement` config, no extra setup in your app.
 
+**[Live Demo](https://www.thewebkid.com/modules/v-movable)**
+
 ## Installation
 
 ```bash
