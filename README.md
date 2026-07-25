@@ -1,4 +1,4 @@
-# v-movable [![npm version](https://badge.fury.io/js/v-movable.svg)](https://badge.fury.io/js/v-movable) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+# v-movable [![npm version](https://badge.fury.io/js/v-movable.svg)](https://badge.fury.io/js/v-movable) [![tests](https://img.shields.io/github/actions/workflow/status/thewebkid/v-movable/tests.yml?branch=master&label=tests)](https://github.com/thewebkid/v-movable/actions/workflows/tests.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A **Vue 3** component that makes any element movable — drag, snap to a grid, clamp to bounds, lock an axis, and read back rich move state. It wraps the [`lit-movable`](https://github.com/thewebkid/lit-movable) web component under the hood, so you get a battle-tested engine with a clean, idiomatic Vue API.
 
