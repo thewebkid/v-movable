@@ -31,10 +31,10 @@
     "index.d.ts",
     "README.md"
   ],
-  "homepage": "https://www.thewebkid.com/modules/v-movable",
+  "homepage": "https://thewebkid.com/modules/v-movable",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thewebkid/v-movable.git"
+    "url": "git+https://github.com/thewebkid/v-movable.git"
   },
   "scripts": {
     "dev": "vite",
